@@ -3,6 +3,8 @@
 $usernameErr = $fnameErr = $lnameErr = $genderErr = $passErr = $cpassErr = $dobErr = "";
 $username = $fname = $lname = $gender = $password = $cpassword = $dob = "";
 
+session_start();
+
 if (isset($_POST["submit"])) {
     if (empty($_POST["username"]))
         $usernameErr = "<span style='color: red; font-size: 13px;'>Username is required</span>";
@@ -19,42 +21,43 @@ if (isset($_POST["submit"])) {
     else
         $lname = $_POST["lname"];
 
-    if (empty($_POST["password"]))
+    if (empty($_POST["password"])) {
         $passErr = "<span style='color: red; font-size: 13px;'>Password is required</span>";
-    else if (strlen($password) < 8)
+    } else if (strlen($_POST["password"]) < 8) {
         $passErr = "<span style='color: red; font-size: 13px;'>Password should be at least 8 characters long</span>";
-    else
+    } else {
         $password = $_POST["password"];
+    }
 
-    if (empty($_POST["cpassword"]))
+
+    if (empty($_POST["cpassword"])) {
         $cpassErr = "<span style='color: red; font-size: 13px;'>Confirm your password</span>";
-    else
+    } else if ($password !== $_POST["cpassword"]) {
+        $cpassErr = "<span style='color: red; font-size: 13px;'>Passwords do not match</span>";
+    } else {
         $cpassword = $_POST["cpassword"];
+    }    
 
     if (empty($_POST["dob"]))
         $dobErr = "<span style='color: red; font-size: 13px;'>Date of Birth is required</span>";
     else
         $dob = $_POST["dob"];
 
-    if (strlen($password) < 8) {
-        echo "Password should be at least 8 characters long.";
+    if ($fnameErr == "" && $lnameErr == "" && $genderErr == "" && $usernameErr == "" && $passErr == "" && $cpassErr == "" && $dobErr == "") {
+        $data = array($username, $fname, $lname, $gender, $dob, $password);
+        $f = fopen("users.csv", 'a');
+        if ($f === false) {
+            die('Error opening the file ' . $file);
+        }
+        fputcsv($f, $data);
+        fclose($f);
+
+        $_SESSION['username'] = $username;
+        $_SESSION['fname'] = $fname;
+        $_SESSION['lname'] = $lname;
+        header("Location: login.php");
         exit();
     }
-
-    if ($password !== $cpassword) {
-        echo "Passwords do not match.";
-        exit();
-    }
-
-    $data = array($username, $fname, $lname, $gender, $dob, $password);
-    $f = fopen("users.csv", 'a');
-    if ($f === false) {
-        die('Error opening the file ' . $file);
-    }
-    fputcsv($f, $data);
-    fclose($f);
-    header("Location: login.php");
-    exit();
 }
 ?>
 
@@ -136,11 +139,11 @@ if (isset($_POST["submit"])) {
                 <td colspan="2"><?php echo $dobErr; ?></td>
             </tr>
 
-            <tr>
+            <!-- <tr>
                 <td colspan="2">
                     <span id="error-message" style="color: red; font-size: 13px;"></span>
                 </td>
-            </tr>
+            </tr> -->
         </table>
 
         <a href="registration.php" class="login-link" style="float: left; padding: 10px;">Login</a>
