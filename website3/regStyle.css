@@ -1,0 +1,188 @@
+*{
+    font-family: 'Poppins', sans-serif;
+
+}
+
+h1,h3{
+    text-align: center;
+    color: #333;
+}
+
+.login-background h1{
+    background: linear-gradient(rgba(0,0,0,0.5),#45559b), url(images/logo2new.png);
+    position: relative;
+    width: 50px;
+    height: 50px;
+}
+
+form{
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-height: 500px; 
+    overflow-y: auto;
+}
+
+table{
+    width: 100%;
+}
+
+td{
+    padding: 5px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea,
+select {
+    width: 80%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+input[type="submit"] , a{
+    width: 175px;
+    text-decoration: none;
+    display: inline-block;
+    margin: 0 10px;
+    padding: 12px 0;
+    color: #45559b;
+    border: .5px solid #45559b;
+    position: relative;
+    z-index: 1;
+    transition: 0.5s;
+    font-weight: bold;
+    text-align: center;
+}
+
+input[type="submit"]:hover, a:hover {
+    background-color: #45559b;
+    color: #fff;
+}
+
+.welcome {
+    text-align: center;
+    color: #333;
+    margin: 0;
+    margin-bottom: 20px;
+}
+
+.success-message {
+    color: red;
+    text-align: center;
+    margin: 0;
+    margin-bottom: 20px;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    flex-direction: column;
+}
+
+.link-container {
+    display: flex;
+    justify-content: space-between; 
+    width: 170px; 
+}
+
+.link , .login-link{
+    width: 175px;
+    text-decoration: none;
+    display: inline-block;
+    margin: 0 10px;
+    padding: 12px 0;
+    color: #45559b;
+    border: .5px solid #45559b;
+    position: relative;
+    z-index: 1;
+    transition: 0.5s;
+    font-weight: bold;
+    text-align: center;
+}
+
+.link:hover, .login-link:hover {
+    background-color: #45559b;
+    color: #fff;
+}
+
+@media screen and (max-width: 770px) {
+    body {
+        flex-basis: 100%;
+    }
+    .link-container , .link , .login-link{
+        width: 100px;
+    }
+    .login-background h1{
+        width: 20px;
+    }
+}
+  
+.login-container {
+    width: 300px;
+    margin-bottom: 50px;
+}
+
+.logo-container {
+    position: relative;
+}
+
+.login-background {
+    color: #333;
+    padding: 10px;
+}
+
+.login-background:before {
+    content: "";
+    background-image: url('images/logo2new.png');
+    background-size: cover;
+    position: absolute;
+    top: -30px;
+    left: 65px;
+    width: 50px;
+    height: 60px;
+    z-index: 2;
+}
+  
+.welcome:before {
+    content: "";
+    background-image: url('images/logo2new.png');
+    background-size: cover;
+    position: absolute;
+    top: 200px;
+    left: 610px;
+    width: 50px;
+    height: 60px;
+    z-index: 2;
+}
+  
+.reg:before {
+    content: "";
+    background-image: url('images/logo2new.png');
+    background-size: cover;
+    position: absolute;
+    top: -30px;
+    left: 180px;
+    width: 50px;
+    height: 60px;
+    z-index: 2;
+}
+
+.regin:before {
+    content: "";
+    background-image: url('images/logo2new.png');
+    background-size: cover;
+    position: absolute;
+    top: -30px;
+    left: 150px;
+    width: 50px;
+    height: 60px;
+    z-index: 2;
+}

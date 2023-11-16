@@ -1,12 +1,51 @@
 <?php
+
+$usernameErr = $fnameErr = $lnameErr = $genderErr = $passErr = $cpassErr = $dobErr = "";
+$username = $fname = $lname = $gender = $password = $cpassword = $dob = "";
+
 if (isset($_POST["submit"])) {
-    $username = $_POST["username"];
-    $fname = $_POST["fname"];
-    $lname = $_POST["lname"];
-    $password = $_POST["password"];
-    $gender = $_POST["gender"];
-    $dob = $_POST["dob"];
-    
+    if (empty($_POST["username"]))
+        $usernameErr = "<span style='color: red; font-size: 13px;'>Username is required</span>";
+    else
+        $username = $_POST["username"];
+
+    if (empty($_POST["fname"]))
+        $fnameErr = "<span style='color: red; font-size: 13px;'>First Name is required</span>";
+    else
+        $fname = $_POST["fname"];
+
+    if (empty($_POST["lname"]))
+        $lnameErr = "<span style='color: red; font-size: 13px;'>Last Name is required</span>";
+    else
+        $lname = $_POST["lname"];
+
+    if (empty($_POST["password"]))
+        $passErr = "<span style='color: red; font-size: 13px;'>Password is required</span>";
+    else if (strlen($password) < 8)
+        $passErr = "<span style='color: red; font-size: 13px;'>Password should be at least 8 characters long</span>";
+    else
+        $password = $_POST["password"];
+
+    if (empty($_POST["cpassword"]))
+        $cpassErr = "<span style='color: red; font-size: 13px;'>Confirm your password</span>";
+    else
+        $cpassword = $_POST["cpassword"];
+
+    if (empty($_POST["dob"]))
+        $dobErr = "<span style='color: red; font-size: 13px;'>Date of Birth is required</span>";
+    else
+        $dob = $_POST["dob"];
+
+    if (strlen($password) < 8) {
+        echo "Password should be at least 8 characters long.";
+        exit();
+    }
+
+    if ($password !== $cpassword) {
+        echo "Passwords do not match.";
+        exit();
+    }
+
     $data = array($username, $fname, $lname, $gender, $dob, $password);
     $f = fopen("users.csv", 'a');
     if ($f === false) {
@@ -19,7 +58,7 @@ if (isset($_POST["submit"])) {
 }
 ?>
 
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="regStyle.css">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -38,26 +77,42 @@ if (isset($_POST["submit"])) {
         <table>
             <tr>
                 <td>Username:</td>
-                <td><input type="text" name="username"></td>
+                <td><input type="text" name="username" value="<?php echo $username; ?>"></td>
             </tr>
             <tr>
+                <td colspan="2"><?php echo $usernameErr; ?></td>
+            </tr>
+
+            <tr>
                 <td>First Name:</td>
-                <td><input type="text" name="fname"></td>
+                <td><input type="text" name="fname" value="<?php echo $fname; ?>"></td>
+            </tr>
+            <tr>
+                <td colspan="2"><?php echo $fnameErr; ?></td>
             </tr>
 
             <tr>
                 <td>Last Name:</td>
-                <td><input type="text" name="lname"></td>
+                <td><input type="text" name="lname" value="<?php echo $lname; ?>"></td>
+            </tr>
+            <tr>
+                <td colspan="2"><?php echo $lnameErr; ?></td>
             </tr>
 
             <tr>
                 <td>Password:</td>
-                <td><input type="password" name="password"></td>
+                <td><input type="password" name="password" value="<?php echo $password; ?>"></td>
+            </tr>
+            <tr>
+                <td colspan="2"><?php echo $passErr; ?></td>
             </tr>
 
             <tr>
                 <td>Confirm Password:</td>
-                <td><input type="password" name="cpassword"></td>
+                <td><input type="password" name="cpassword" value="<?php echo $cpassword; ?>"></td>
+            </tr>
+            <tr>
+                <td colspan="2"><?php echo $cpassErr; ?></td>
             </tr>
 
             <tr>
@@ -69,10 +124,16 @@ if (isset($_POST["submit"])) {
                     </select>
                 </td>
             </tr>
+            <tr>
+                <td colspan="2"><?php echo $genderErr; ?></td>
+            </tr>
 
             <tr>
                 <td>Date of Birth:</td>
-                <td><input type="date" name="dob"></td>
+                <td><input type="date" name="dob" value="<?php echo $dob; ?>"></td>
+            </tr>
+            <tr>
+                <td colspan="2"><?php echo $dobErr; ?></td>
             </tr>
 
             <tr>
@@ -86,64 +147,6 @@ if (isset($_POST["submit"])) {
         <button type="submit" name="submit" style="float: right; padding: 10px;">Submit</button>
     </form>
 
-    <script>
-        function submitForm() {
-            var formData = {
-                username: document.getElementsByName("username")[0].value,
-                fname: document.getElementsByName("fname")[0].value,
-                lname: document.getElementsByName("lname")[0].value,
-                password: document.getElementsByName("password")[0].value,
-                cpassword: document.getElementsByName("cpassword")[0].value,
-                gender: document.getElementsByName("gender")[0].value,
-                dob: document.getElementsByName("dob")[0].value
-            };
-
-            var errorMessage = validateForm(formData);
-
-            if (errorMessage) {
-                document.getElementById("error-message").innerText = errorMessage;
-            } else {
-                document.getElementById("error-message").innerText = "";
-                document.getElementById("registrationForm").submit();
-            }
-        }
-
-        function validateForm(fheaderormData) {
-            if (!formData.username.trim()) {
-                return "Username is required.";
-            }
-
-            if (!formData.fname.trim()) {
-                return "First Name is required.";
-            }
-
-            if (!formData.lname.trim()) {
-                return "Last Name is required.";
-            }
-
-            if (!formData.password.trim()) {
-                return "Password is required.";
-            }
-
-            if (formData.password.trim().length < 8) {
-                return "Password should be at least 8 characters long.";
-            }
-
-            if (formData.password !== formData.cpassword) {
-                return "Passwords do not match.";
-            }
-
-            if (!formData.gender) {
-                return "Please select a gender.";
-            }
-
-            if (!formData.dob) {
-                return "Date of Birth is required.";
-            }
-
-            return "";
-        }
-    </script>
 </body>
 
 </html>
