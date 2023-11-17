@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-$usernameErr = $passwordErr = '';
+$euser = $epass = $usernameErr = $passwordErr = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $euser = $_POST["user"];
@@ -16,11 +16,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (empty($usernameErr) && empty($passwordErr)) {
         $users = array_map('str_getcsv', file('users.csv'));
+        $usernameFound = false;
 
         foreach ($users as $user) {
             list($username, $fname, $lname, $dob, $gender, $password) = $user;
 
             if ($username === $euser) {
+                $usernameFound = true;
                 if ($password === $epass) {
                     $_SESSION['username'] = $username;
                     $_SESSION['fname'] = $fname;
@@ -28,15 +30,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $_SESSION['gender'] = $gender;
                     $_SESSION['dob'] = $dob;
 
-                    header("Location: index.html");
+                    header("Location: home.php");
                     exit();
                 } else {
                     $passwordErr = "<span style='color: red; font-size: 13px;'>Invalid password</span>";
                 }
-            } else
-                $usernameErr = "<span style='color: red; font-size: 13px;'>Invalid username</span>";
+            }
         }
 
+        if (!$usernameFound) {
+            $usernameErr = "<span style='color: red; font-size: 13px;'>Invalid username</span>";
+        }
     }
 }
 ?>
