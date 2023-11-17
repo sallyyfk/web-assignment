@@ -16,8 +16,8 @@
     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
         <table>
             <tr>
-                <td>Email</td>
-                <td><input type="email" name="email"></td>
+                <td>Username:</td>
+                <td><input type="username" name="username"></td>
             </tr>
             <tr>
                 <td colspan="2"></td>

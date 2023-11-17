@@ -3,8 +3,6 @@
 $usernameErr = $fnameErr = $lnameErr = $genderErr = $passErr = $cpassErr = $dobErr = "";
 $username = $fname = $lname = $gender = $password = $cpassword = $dob = "";
 
-session_start();
-
 if (isset($_POST["submit"])) {
     if (empty($_POST["username"]))
         $usernameErr = "<span style='color: red; font-size: 13px;'>Username is required</span>";
@@ -51,10 +49,6 @@ if (isset($_POST["submit"])) {
         }
         fputcsv($f, $data);
         fclose($f);
-
-        $_SESSION['username'] = $username;
-        $_SESSION['fname'] = $fname;
-        $_SESSION['lname'] = $lname;
         header("Location: login.php");
         exit();
     }
@@ -138,16 +132,10 @@ if (isset($_POST["submit"])) {
             <tr>
                 <td colspan="2"><?php echo $dobErr; ?></td>
             </tr>
-
-            <!-- <tr>
-                <td colspan="2">
-                    <span id="error-message" style="color: red; font-size: 13px;"></span>
-                </td>
-            </tr> -->
         </table>
 
-        <a href="registration.php" class="login-link" style="float: left; padding: 10px;">Login</a>
-        <button type="submit" name="submit" style="float: right; padding: 10px;">Submit</button>
+        <a href="login.php" class="login-link" style="float: left; padding: 10px;">Login</a>
+        <button type="submit" name="submit" class="login-link" style="float: right; padding: 10px;">Submit</button>
     </form>
 
 </body>
