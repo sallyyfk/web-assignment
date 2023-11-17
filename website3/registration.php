@@ -34,12 +34,14 @@ if (isset($_POST["submit"])) {
         $cpassErr = "<span style='color: red; font-size: 13px;'>Passwords do not match</span>";
     } else {
         $cpassword = $_POST["cpassword"];
-    }    
+    }
 
     if (empty($_POST["dob"]))
         $dobErr = "<span style='color: red; font-size: 13px;'>Date of Birth is required</span>";
     else
         $dob = $_POST["dob"];
+
+    $gender = $_POST["gender"];
 
     if ($fnameErr == "" && $lnameErr == "" && $genderErr == "" && $usernameErr == "" && $passErr == "" && $cpassErr == "" && $dobErr == "") {
         $data = array($username, $fname, $lname, $gender, $dob, $password);
